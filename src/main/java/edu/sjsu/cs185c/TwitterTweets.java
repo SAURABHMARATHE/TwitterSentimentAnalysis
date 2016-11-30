@@ -1,7 +1,4 @@
-
-
-
-
+package edu.sjsu.cs185c;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -140,7 +137,7 @@ public class TwitterTweets {
 
 	}
 
-	public static void tweet(String searchPost) throws IOException
+	public static void tweet(String searchPost, String topicSentiment) throws IOException
 	{
 		SEARCH_TERM=searchPost;
 		
@@ -276,7 +273,7 @@ public class TwitterTweets {
 						
 					//	System.out.printf("%s\n",cleanText(s.getText()));
 						
-						producer.send(new ProducerRecord(topic, cleanText(s.getText())));
+						producer.send(new ProducerRecord(topicSentiment, topic+",;,"+cleanText(s.getText())));
 						// TODO: flush producer
 			    		producer.flush();
 						
@@ -322,7 +319,7 @@ public class TwitterTweets {
 		System.out.println("Enter search string here:-");
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
-		TwitterTweets.tweet(br.toString());
+		TwitterTweets.tweet(args[0], args[1]);
 	}
 		
 }

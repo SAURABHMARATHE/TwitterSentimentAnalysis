@@ -8,11 +8,11 @@ import java.util.HashMap;
 import java.util.Properties;
 import java.util.Random;
 
-import org.apache.hadoop.util.hash.Hash;
+//import org.apache.hadoop.util.hash.Hash;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.apache.mesos.containerizer.Protos.Wait;
+//import org.apache.mesos.containerizer.Protos.Wait;
 
 import com.google.common.io.Resources;
 
@@ -30,7 +30,7 @@ public class Visualizer {
 				properties.setProperty("group.id", "group-" + new Random().nextInt(100000));
 			}
 			consumer = new KafkaConsumer<>(properties);
-			consumer.subscribe(Arrays.asList("visualizer"));
+			consumer.subscribe(Arrays.asList(args[0]));
 			int timeouts = 0;
 			while (true) {
 				ConsumerRecords<String, String> records = consumer.poll(200);
@@ -41,10 +41,11 @@ public class Visualizer {
 					timeouts = 0;
 				}
 				for (ConsumerRecord<String, String> record : records) {
-					System.out.println(record.value());
-					String[] tokens = record.value().split(",");
+					//System.out.println(record.value());
+					String[] tokens = record.value().split(",;,");
 					String hashTag = tokens[0];
 					String sentiment = tokens[2];
+					System.out.println(hashTag+","+sentiment);
 					if (hm.containsKey(hashTag)) {
 						switch (sentiment) {
 						case "positive":

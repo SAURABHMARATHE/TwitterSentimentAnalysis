@@ -25,7 +25,7 @@ import java.util.Scanner;
 public class SentimentAnalyzer {
 	public static void main(String[] args) throws IOException {
 		// error-check the command line
-		if (args.length != 1) {
+		if (args.length != 2) {
 			System.err.println("usage: Consumer <topic> <threshold> <file>");
 			System.exit(1);
 		}
@@ -60,7 +60,7 @@ public class SentimentAnalyzer {
 					// TODO: pull out the vibration delta from record
 					// System.out.println(record.value());
 					String tweetRecord = record.value();
-					String[] tokens = tweetRecord.split(",");
+					String[] tokens = tweetRecord.split(",;,");
 					String hashTag = tokens[0];
 					String tweet = tokens[1];
 					JSONObject responseObject = null;
@@ -84,8 +84,8 @@ public class SentimentAnalyzer {
 						properties.load(props);
 						producer = new KafkaProducer<>(properties);
 
-						String message = tweetRecord + "," + sentiment;
-						ProducerRecord<String, String> rec = new ProducerRecord<String, String>("visualizer", message);
+						String message = tweetRecord + ",;," + sentiment;
+						ProducerRecord<String, String> rec = new ProducerRecord<String, String>(args[1], message);
 						// TODO: publish message to topic
 						producer.send(rec);
 						// TODO: flush producer

@@ -1,0 +1,4 @@
+mvn clean install
+java -cp target/twitterSentiment-0.0.1-SNAPSHOT-jar-with-dependencies.jar edu.sjsu.cs185c.Visualizer visualizer01
+java -cp target/twitterSentiment-0.0.1-SNAPSHOT-jar-with-dependencies.jar edu.sjsu.cs185c.SentimentAnalyzer sentiment01 visualizer01
+java -cp target/twitterSentiment-0.0.1-SNAPSHOT-jar-with-dependencies.jar edu.sjsu.cs185c.TwitterTweets good sentiment01
